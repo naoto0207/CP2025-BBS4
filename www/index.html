@@ -507,6 +507,21 @@ $(function() {
     });
 
     $('#logoutButton').on('click', logout);
+    $('#logoutButton').on('click', logout);
+
+    // --- ここから背景色の処理を追加 ---
+    const colors = ['#f4f7f6', '#e0e0e0', '#fdf5e6'];
+    let colorIndex = 0;
+    $('#bgColorButton').on('click', () => {
+        colorIndex = (colorIndex + 1) % colors.length;
+        $('body').css('background-color', colors[colorIndex]);
+        localStorage.setItem('selectedBgColor', colors[colorIndex]);
+    });
+    const savedColor = localStorage.getItem('selectedBgColor');
+    if (savedColor) {
+        $('body').css('background-color', savedColor);
+        colorIndex = colors.indexOf(savedColor);
+    }
 
     // 投稿一覧表示順序選択
     $('#sortOrder').on('change', loadPosts);
@@ -552,9 +567,10 @@ window.addEventListener('unload', () => {
 
         <!-- ログイン情報（ログイン時表示） -->
         <div class="user-info logged-in">
-            <span>ログイン中：<span id="userEmail"></span></span>
-            <button id="logoutButton" class="btn-secondary">ログアウト</button>
-        </div>
+    <span>ログイン中：<span id="userEmail"></span></span>
+    <button id="bgColorButton" class="btn-secondary">背景色切替</button>
+    <button id="logoutButton" class="btn-secondary">ログアウト</button>
+</div>
 
         <!-- 投稿フォーム（ログイン時表示） -->
         <div class="post-form logged-in">
